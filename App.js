@@ -34,7 +34,7 @@ export default class App extends React.Component {
       let response = await fetch(
         'https://sandbox.momodeveloper.mtn.com/collection/v1_0/account/balance', {
         'method': 'GET', 'headers': {
-          'Ocp-Apim-Subscription-Key': '756d65210f384bc6b835932101f7049e',
+          'Ocp-Apim-Subscription-Key': '756d65210f384bc6b835932101f70491',
           'X-Target-Environment': 'sandbox',
           'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSMjU2In0.eyJjbGllbnRJZCI6IjczOTcxNmYzLTQ5NDMtNDU0My1hMzg0LWIxMGM0YTE0NDRhYyIsImV4cGlyZXMiOiIyMDIxLTAyLTA4VDA5OjM0OjQ2LjMyNSIsInNlc3Npb25JZCI6ImY5Mjc5M2NkLTJkNzMtNDk1NS1iMThhLWQ4MmFmY2JlZjIwYSJ9.Ppmdn2SBSUV5TqhK9AQh4LSQ8TTw36f37vXLvBMD8NFMOD0CNkAdZKPt-vmUV5VRbHmK4RQ4eYbXro4neGVrMZzgyKbuXSxWNdkToAzedAC5YsrrooL0ir-IhLCKbmDrucLFtOireiJC94OWwlERULhhvD9en3JwtM-t4vGucedz-gchGn9qUUTdD4eXSrsMudroGRBJdB4ded2nMz2ob6iEhWcViyshVxBXZXOEICTbXA8KtoxerIU53UmUgszkwfmR-kjDC11qfChFYhIea9N3D5un4pNE-pImXSJ8eD9rDQwUsB_RkQmtyoCKih_xctdqkMBc0baHUTPwmAlDtQ'
         }
