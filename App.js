@@ -2,6 +2,7 @@
 import React from 'react';
 import Tts from 'react-native-tts';
 import call from 'react-native-phone-call';
+import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native";
 
 
@@ -55,7 +56,9 @@ export default class App extends React.Component {
         prompt: true,
       };
       // Make a call
+      //RNImmediatePhoneCall.immediatePhoneCall('3');
       call(args).catch(console.error);
+
     } else if (task == 'b') {
       const mobileMb = "*165*8*1" + encodeURIComponent('#');
 
@@ -85,8 +88,16 @@ export default class App extends React.Component {
         prompt: true,
       };
       // Make a call
-      call(args).catch(console.error);
+      if(this.state.NUMBER.length === 10){
+        call(args).catch(console.error);
 
+
+      }else{
+        Tts.speak('invalid number entered');
+        alert("Should be 10 characters in length !");
+
+      }
+      
 
 
     } else if (task == 'e') {
@@ -97,7 +108,7 @@ export default class App extends React.Component {
         prompt: true,
       };
       // Make a call
-      Tts.speak('please note that this is only usable on friday');
+      Tts.speak('only use this on friday');
 
       call(args).catch(console.error);
 
@@ -133,10 +144,32 @@ export default class App extends React.Component {
 
 
     }else if (task == 'h') {
-      const yaka = `*165*4*1*1*2${this.state.AcNUMBER}`+ encodeURIComponent('#');
+      const yaka = `*165*4*1*1*2*${this.state.AcNUMBER}`+ encodeURIComponent('#');
 
       const args = {
         number: yaka,
+        prompt: true,
+      };
+      // Make a call
+      
+      if(this.state.AcNUMBER.length === 11){
+        call(args).catch(console.error);
+
+
+      }else{
+        Tts.speak('invalid account number entered');
+        alert("Should be 11 characters in length!");
+
+      }
+
+
+
+
+    }else if(task == 'i'){
+      const dataBundle = '*165*4*2*1*1' + encodeURIComponent('#');
+
+      const args = {
+        number: dataBundle,
         prompt: true,
       };
       // Make a call
@@ -145,8 +178,21 @@ export default class App extends React.Component {
 
 
 
+    }else if(task == 'j'){
+      const dataBundle = '*165*4*2*1*2' + encodeURIComponent('#');
+
+      const args = {
+        number: dataBundle,
+        prompt: true,
+      };
+      // Make a call
+      
+      call(args).catch(console.error);
+
+
 
     }
+
 
 
 
@@ -159,8 +205,17 @@ export default class App extends React.Component {
 
     return (
       <View style={styles.container}>
+         <TouchableOpacity
+          onPress={()=>{Tts.speak('its all about convenience')}}
+          >
+          <Text style={styles.titleText}>M
+          <Text style={{color:'red',fontSize:70}}>e</Text>
+          KKA
+          <Text style={{color:'red',fontSize:60}}>?</Text>
+          </Text>
+          </TouchableOpacity>
         <ScrollView>
-          
+         
           <TouchableOpacity
             style={styles.submitButton}
             onPress={() => { this.triggerCall('a') }}
@@ -202,6 +257,18 @@ export default class App extends React.Component {
           >
             <Text style={styles.submitButtonText}>DATA BUNDLES (MTN) </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.airtelButton}
+            onPress={() => { this.triggerCall('i') }}
+          >
+            <Text style={styles.submitButtonText}>PAY DStv (MTN) </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.airtelButton}
+            onPress={() => { this.triggerCall('j') }}
+          >
+            <Text style={styles.submitButtonText}>PAY Gotv (MTN) </Text>
+          </TouchableOpacity>
            <View style={styles.balances}>
 
 
@@ -212,7 +279,7 @@ export default class App extends React.Component {
               placeholderTextColor="black"
               autoCapitalize="none"
               onChangeText={text => this.handleNumber(text)}
-              backgroundColor="white"
+              backgroundColor="snow"
             />
             <TextInput
               style={styles.input}
@@ -222,7 +289,7 @@ export default class App extends React.Component {
               autoCapitalize="none"
               secureTextEntry={false}
               onChangeText={text => this.handleAmount(text)}
-              backgroundColor="white"
+              backgroundColor="snow"
             />
 
             <TouchableOpacity
@@ -238,19 +305,21 @@ export default class App extends React.Component {
           <TextInput
               style={styles.input}
               underlineColorAndroid="transparent"
-              placeholder="YAKA AC. NUMBER"
+              placeholder="ACCOUNT NUMBER"
               placeholderTextColor="black"
               autoCapitalize="none"
               secureTextEntry={false}
               onChangeText={text => this.handleAcNUMBER(text)}
-              backgroundColor="white"
+              backgroundColor="snow"
             />
+            
             <TouchableOpacity
               style={styles.audioButton}
               onPress={() => { this.triggerCall('h') }}
             >
               <Text style={styles.submitButtonText}>PAY YAKA (MTN) </Text>
             </TouchableOpacity>
+            
 
           </View>
 
@@ -269,14 +338,17 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "snow",
 
   },
   input: {
     margin: 10,
     height: 40,
     borderColor: "black",
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius:5
+
+    
 
   },
   submitButton: {
@@ -288,7 +360,10 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   submitButtonText: {
-    color: "white"
+    color: "snow",
+    fontSize:16,
+    fontWeight:'600',
+    fontStyle:'normal'
   },
   audioButton: {
     backgroundColor: "red",
@@ -296,7 +371,9 @@ const styles = StyleSheet.create({
     margin: 15,
     alignItems: "center",
     height: 40,
-    borderRadius: 5
+    borderRadius: 5,
+    
+  
 
 
   },
@@ -304,7 +381,10 @@ const styles = StyleSheet.create({
   balances: {
     backgroundColor: 'black',
     margin: 15,
-    borderRadius: 5
+    borderRadius: 5,
+    
+
+    
 
 
 
@@ -324,6 +404,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 40,
     borderRadius: 5
+  },
+  titleText:{
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+    fontSize: 50,
+    textDecorationLine: 'underline',
+    color:'black'
   }
 
 
